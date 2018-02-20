@@ -1,4 +1,4 @@
-#iSEB Mini-project
+# SEB Mini-project
 ## Research Phase
 ## Coding Phase 
 ## Quick thing on how to use git 
