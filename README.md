@@ -7,6 +7,6 @@
 * git commit  -m '< message > '
 * git push 
   
-### how to pull to git 
+### how to pull from git 
 * cd SEBminiproject (from your home directory)
 * git pull 
