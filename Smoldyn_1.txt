@@ -1,0 +1,264 @@
+# Heterocyst model 1
+
+graphics opengl_good
+
+dim 3
+species C N O2			
+
+time_start 0
+time_stop 100000
+time_step 0.1	
+
+color N red	
+color C green
+color O2 blue
+
+display_size * 2
+
+boundaries x -640 635 r    
+boundaries y -70 70 r
+boundaries z -70 70 r
+
+start_surface cellmembrane_1
+action all both reflect
+color both purple 1
+polygon both edge
+panel sph -580 0 0 50 20 20
+end_surface
+
+start_surface cellmembrane_2
+action all both reflect
+color both purple 1
+polygon both edge
+panel sph -475 0 0 50 20 20
+panel cyl -524 0 0 -531 0 0 2 10 3
+end_surface
+
+start_surface jumpsurface_123
+action both all jump
+color both blue
+polygon both edge
+panel disk -529 0 0 6 1 0 0 10 c1b
+panel disk -524 0 0 6 1 0 0 10 c2a
+panel disk -426 0 0 6 1 0 0 10 c2b
+panel disk -419 0 0 6 1 0 0 10 c3a
+jump c1b back <-> c2a front
+jump c2b back <-> c3a front
+end_surface
+
+start_surface cellmembrane_3
+action all both reflect
+color both purple 1
+polygon both edge
+panel sph -370 0 0 50 20 20
+panel cyl -419 0 0 -426 0 0 2 10 3
+end_surface
+
+start_surface cellmembrane_4
+action all both reflect
+color both purple 1
+polygon both edge
+panel sph -265 0 0 50 20 20
+panel cyl -314 0 0 -321 0 0 2 10 3
+end_surface
+
+start_surface jumpsurface_345
+action both all jump
+color both blue
+polygon both edge
+panel disk -321 0 0 6 1 0 0 10 c3b
+panel disk -314 0 0 6 1 0 0 10 c4a
+panel disk -216 0 0 6 1 0 0 10 c4b
+panel disk -209 0 0 6 1 0 0 10 c5a
+jump c3b back <-> c4a front
+jump c4b back <-> c5a front
+end_surface
+
+start_surface cellmembrane_5
+action all both reflect
+color both purple 1
+polygon both edge
+panel sph -160 0 0 50 20 20
+panel cyl -209 0 0 -216 0 0 2 10 3
+end_surface
+
+start_surface cellmembrane_6
+action all both reflect
+colour both purple 1
+polygon both edge
+panel sph -55 0 0 50 20 20
+panel cyl -104 0 0 -111 0 0 2 10 3
+end_surface
+
+start_surface jumpsurface_567
+action both all jump
+color both blue
+polygon both edge
+panel disk -111 0 0 6 1 0 0 10 c5b
+panel disk -104 0 0 6 1 0 0 10 c6a
+panel disk -6 0 0 6 1 0 0 10 c6b
+panel disk +1 0 0 6 1 0 0 10 c7a
+jump c5b back <-> c6a front
+jump c6b back <-> c7a front
+end_surface
+
+start_surface cellmembrane_7
+action all both reflect
+color both purple 1
+polygon both edge
+panel sph 50 0 0 50 20 20
+panel cyl 1 0 0 -6 0 0 2 10 3
+panel cyl 99 0 0 106 0 0 2 10 3
+end_surface
+
+start_surface cellmembrane_8
+action all both reflect
+color both purple 1
+polygon both edge
+panel sph 155 0 0 50 20 20
+panel cyl 204 0 0 211 0 0 2 10 3
+end_surface
+
+start_surface jumpsurface_789
+action both all jump
+color both blue
+polygon both edge
+panel disk +99 0 0 6 1 0 0 10 c7b
+panel disk +116 0 0 6 1 0 0 10 c8a
+panel disk +204 0 0 6 1 0 0 10 c8b
+panel disk +211 0 0 6 1 0 0 10 c9a
+jump c7b back <-> c8a front
+jump c8b back <-> c9a front
+end_surface
+
+start_surface cellmembrane_9
+action all both reflect
+color both purple 1
+polygon both edge
+panel sph 260 0 0 50 20 20
+panel cyl 309 0 0 316 0 0 2 10 3
+end_surface
+
+start_surface cellmembrane_10
+action all both reflect
+color both purple 1
+polygon both edge
+panel sph 365 0 0 50 20 20
+panel cyl 414 0 0 421 0 0 2 10 3
+end_surface
+
+start_surface jumpsurface_91011
+action both all jump
+color both blue
+polygon both edge
+panel disk +309 0 0 6 1 0 0 10 c9b
+panel disk +316 0 0 6 1 0 0 10 c10a
+panel disk +414 0 0 6 1 0 0 10 c10b
+panel disk +421 0 0 6 1 0 0 10 c11a
+jump c9b back <-> c10a front
+jump c10b back <-> c11a front
+end_surface
+
+start_surface cellmembrane_11
+action all both reflect
+color both purple 1
+polygon both edge
+panel sph 470 0 0 50 20 20
+panel cyl 519 0 0 526 0 0 2 10 3
+end_surface
+
+start_surface cellmembrane_12
+action all both reflect
+color both purple 1
+polygon both edge
+panel sph 575 0 0 50 20 20
+panel cyl 624 0 0 631 0 0 2 10 3
+end_surface
+
+start_surface jumpsurface_1112
+action both all jump
+color both blue
+polygon both edge
+panel disk +519 0 0 6 1 0 0 10 c11b
+panel disk +526 0 0 6 1 0 0 10 c12a
+jump c11b back <-> c12a front
+end_surface
+
+
+start_compartment cytoplasm_1
+surface cellmembrane_1
+point -575 0 0
+end_compartment
+
+start_compartment cytoplasm_2
+surface cellmembrane_2
+point -470 0 0
+end_compartment
+
+start_compartment cytoplasm_3
+surface cellmembrane_3
+point -365 0 0
+end_compartment
+
+start_compartment cytoplasm_4
+surface cellmembrane_4
+point -260 0 0
+end_compartment
+
+start_compartment cytoplasm_5
+surface cellmembrane_5
+point -155 0 0
+end_compartment
+
+start_compartment cytoplasm_6
+surface cellmembrane_6
+point -50 0 0
+end_compartment
+
+
+start_compartment cytoplasm_7
+surface cellmembrane_7
+point 50 0 0
+end_compartment
+
+start_compartment cytoplasm_8
+surface cellmembrane_8
+point 155 0 0
+end_compartment
+
+start_compartment cytoplasm_9
+surface cellmembrane_9
+point 260 0 0
+end_compartment
+
+start_compartment cytoplasm_10
+surface cellmembrane_10
+point 365 0 0
+end_compartment
+
+start_compartment cytoplasm_11
+surface cellmembrane_11
+point 470 0 0
+end_compartment
+
+start_compartment cytoplasm_12
+surface cellmembrane_12
+point 575 0 0
+end_compartment
+
+compartment_mol 100 N cytoplasm_6
+compartment_mol 100 C cytoplasm_6
+compartment_mol 100 O2 cytoplasm_7
+
+difc N 5
+difc C 5
+difc O2 1
+
+/*
+reaction photosynthesis		0 -> C + O2			4e-4		# 2 s^-1
+reaction respiration		O2 + C -> 0			2e-4		
+reaction Nfixation		0 -> N 				2e-4		
+reaction protein_turnover	N -> 0				1e-4
+*/
+
+end_file
