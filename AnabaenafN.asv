@@ -1,0 +1,13 @@
+function [dydt] = AnabaenafN(t, y, N, x)
+%This models the growth and differentiation of the Anabaena cells   
+dydt = zeros(x,1);
+dfNdt = zeros(x,1);
+    for i = 1:x
+        if y(i) > 0
+            dydt(i) = y(i)*(5.1 - y(i));
+            if y(i-1) > 0 && y(i+1)>0 %Cells that have two neighbours
+                dfNdt = D*N(i-1)/y(i-1) + D*N(i+1)/y(i+1) -  
+        else
+        end
+    end
+end
