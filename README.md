@@ -1,6 +1,21 @@
 # SEB Mini-project
 ## Research Phase
+* Find a good metric for testing different spieces against one another
+* Decide on different enviroments to be tested 
+
 ## Coding Phase 
+* Matlab Differential Equations: 
+	- **Aim:** To have simple equations which dictate the behaviour of the cell when nitrogen/carbon/sunlight are altered 
+* Smoldyn Model: 
+	- **Aim:** To represent the diffusion across different cells of the nitrogen. 
+* F# model: 
+	- **Aim:** to have a model which represents the growth of the cluster of cells
+	- **Tasks:** 
+		- compile the existing code for the Hybrid Modelling tool 
+		- test the existing code for any further issues 
+		- try to alter the size parameter in the hybrid testing model to instead represent nitrogen content. 
+
+		
 ## Quick thing on how to use git 
 ### how to push to git 
 * git add < file.name > 
