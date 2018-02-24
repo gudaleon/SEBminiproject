@@ -1,0 +1,389 @@
+# Heterocyst model 1
+
+#graphics opengl_good
+
+dim 3
+species Cgas Ngas Ogas Cfix Nfix ATP			
+
+time_start 0
+time_stop 100000
+time_step 1
+
+color Nfix red	
+color Cfix green
+color Ngas pink	
+color Cgas orange
+color Ogas blue
+color ATP yellow
+
+display_size ATP 4
+display_size Nfix 5
+display_size Cfix 5
+display_size Cgas 2
+display_size Ngas 2
+
+boundaries x -900 1100 r  
+boundaries y -500 500 r
+boundaries z -500 500 r
+frame_thickness 0
+
+start_surface boundary
+action all both reflect
+color both black 0
+polygon both edge
+panel rect +0 -700 -71 400 871 -800
+panel rect -0 900 -71 400 871 -800
+panel rect +1 -700 -71 400 1600 -800
+panel rect -1 -700 800 400 1600 -800
+panel rect +2 -700 -71 400 1600 871
+panel rect -2 -700 -71 -400 1600 871
+end_surface 
+
+start_surface filament
+action all both transmit
+action Nfix both reflect
+action Cfix both reflect
+color both darkgrey 1
+polygon both edge
+panel hemi -580 0 0 70 1 0 0 10 5	
+panel cyl -580 0 0 850 0 0 70 10 5
+panel disk 850 0 0 70 1 0 0 10
+end_surface
+
+start_surface cellmembrane_1
+action all both transmit
+color both purple 1
+polygon both edge
+panel sph -580 0 0 50 20 20
+end_surface
+
+start_surface cellmembrane_2
+action all both reflect 
+color both orange 1
+polygon both edge
+panel sph -475 0 0 50 20 20
+panel cyl -524 0 0 -531 0 0 2 10 3
+end_surface
+
+start_surface jumpsurface_123
+action both all jump
+color both blue
+polygon both edge
+panel disk -529 0 0 6 1 0 0 10 c1b
+panel disk -524 0 0 6 1 0 0 10 c2a
+panel disk -426 0 0 6 1 0 0 10 c2b
+panel disk -419 0 0 6 1 0 0 10 c3a
+jump c1b back <-> c2a front
+jump c2b back <-> c3a front
+end_surface
+
+start_surface cellmembrane_3
+action all both transmit
+color both purple 1
+polygon both edge
+panel sph -370 0 0 50 20 20
+panel cyl -419 0 0 -426 0 0 2 10 3
+end_surface
+
+start_surface cellmembrane_4
+action all both transmit
+color both purple 1
+polygon both edge
+panel sph -265 0 0 50 20 20
+panel cyl -314 0 0 -321 0 0 2 10 3
+end_surface
+
+start_surface jumpsurface_345
+action both all jump
+color both blue
+polygon both edge
+panel disk -321 0 0 6 1 0 0 10 c3b
+panel disk -314 0 0 6 1 0 0 10 c4a
+panel disk -216 0 0 6 1 0 0 10 c4b
+panel disk -209 0 0 6 1 0 0 10 c5a
+jump c3b back <-> c4a front
+jump c4b back <-> c5a front
+end_surface
+
+start_surface cellmembrane_5
+action all both transmit 
+color both purple 1
+polygon both edge
+panel sph -160 0 0 50 20 20
+panel cyl -209 0 0 -216 0 0 2 10 3
+end_surface
+
+start_surface cellmembrane_6
+action all both transmit
+colour both purple 1
+polygon both edge
+panel sph -55 0 0 50 20 20
+panel cyl -104 0 0 -111 0 0 2 10 3
+end_surface
+
+start_surface jumpsurface_567
+action both all jump
+color both blue
+polygon both edge
+panel disk -111 0 0 6 1 0 0 10 c5b
+panel disk -104 0 0 6 1 0 0 10 c6a
+panel disk -6 0 0 6 1 0 0 10 c6b
+panel disk +1 0 0 6 1 0 0 10 c7a
+jump c5b back <-> c6a front
+jump c6b back <-> c7a front
+end_surface
+
+start_surface cellmembrane_7
+action all both transmit 
+color both purple 1
+polygon both edge
+panel sph 50 0 0 50 20 20
+panel cyl 1 0 0 -6 0 0 2 10 3
+panel cyl 99 0 0 106 0 0 2 10 3
+end_surface
+
+start_surface cellmembrane_8
+action all both transmit
+color both purple 1
+polygon both edge
+panel sph 155 0 0 50 20 20
+panel cyl 204 0 0 211 0 0 2 10 3
+end_surface
+
+start_surface jumpsurface_789
+action both all jump
+color both blue
+polygon both edge
+panel disk +99 0 0 6 1 0 0 10 c7b
+panel disk +116 0 0 6 1 0 0 10 c8a
+panel disk +204 0 0 6 1 0 0 10 c8b
+panel disk +211 0 0 6 1 0 0 10 c9a
+jump c7b back <-> c8a front
+jump c8b back <-> c9a front
+end_surface
+
+start_surface cellmembrane_9
+action all both transmit
+color both purple 1
+polygon both edge
+panel sph 260 0 0 50 20 20
+panel cyl 309 0 0 316 0 0 2 10 3
+end_surface
+
+start_surface cellmembrane_10
+action all both reflect
+color both orange 1
+polygon both edge
+panel sph 365 0 0 50 20 20
+panel cyl 414 0 0 421 0 0 2 10 3
+end_surface
+
+start_surface jumpsurface_91011
+action both all jump
+color both blue
+polygon both edge
+panel disk +309 0 0 6 1 0 0 10 c9b
+panel disk +316 0 0 6 1 0 0 10 c10a
+panel disk +414 0 0 6 1 0 0 10 c10b
+panel disk +421 0 0 6 1 0 0 10 c11a
+jump c9b back <-> c10a front
+jump c10b back <-> c11a front
+end_surface
+
+start_surface cellmembrane_11
+action all both transmit
+color both purple 1
+polygon both edge
+panel sph 470 0 0 50 20 20
+panel cyl 519 0 0 526 0 0 2 10 3
+end_surface
+
+start_surface cellmembrane_12
+action all both transmit
+color both purple 1
+polygon both edge
+panel sph 575 0 0 50 20 20
+end_surface
+
+start_surface jumpsurface_1112
+action both all jump
+color both blue
+polygon both edge
+panel disk +519 0 0 6 1 0 0 10 c11b
+panel disk +526 0 0 6 1 0 0 10 c12a
+jump c11b back <-> c12a front
+end_surface
+
+
+start_compartment cytoplasm_1
+surface cellmembrane_1
+point -575 0 0
+end_compartment
+
+start_compartment cytoplasm_2
+surface cellmembrane_2
+point -470 0 0
+end_compartment
+
+start_compartment cytoplasm_3
+surface cellmembrane_3
+point -365 0 0
+end_compartment
+
+start_compartment cytoplasm_4
+surface cellmembrane_4
+point -260 0 0
+end_compartment
+
+start_compartment cytoplasm_5
+surface cellmembrane_5
+point -155 0 0
+end_compartment
+
+start_compartment cytoplasm_6
+surface cellmembrane_6
+point -50 0 0
+end_compartment
+
+
+start_compartment cytoplasm_7
+surface cellmembrane_7
+point 50 0 0
+end_compartment
+
+start_compartment cytoplasm_8
+surface cellmembrane_8
+point 155 0 0
+end_compartment
+
+start_compartment cytoplasm_9
+surface cellmembrane_9
+point 260 0 0
+end_compartment
+
+start_compartment cytoplasm_10
+surface cellmembrane_10
+point 365 0 0
+end_compartment
+
+start_compartment cytoplasm_11
+surface cellmembrane_11
+point 470 0 0
+end_compartment
+
+start_compartment cytoplasm_12
+surface cellmembrane_12
+point 575 0 0
+end_compartment
+
+start_compartment boundary 
+surface boundary
+point 0 0 0 
+end_compartment
+
+start_compartment filament 
+surface filament
+point 0 0 0 
+end_compartment
+
+start_compartment extracellular
+surface cellmembrane_1
+surface cellmembrane_2
+surface cellmembrane_3
+surface cellmembrane_4
+surface cellmembrane_5
+surface cellmembrane_6
+surface cellmembrane_7
+surface cellmembrane_8
+surface cellmembrane_9
+surface cellmembrane_10
+surface cellmembrane_11
+surface cellmembrane_12
+surface filament 
+point 0 60 0
+end_compartment
+
+start_compartment intracellular
+surface cellmembrane_1
+surface cellmembrane_2
+surface cellmembrane_3
+surface cellmembrane_4
+surface cellmembrane_5
+surface cellmembrane_6
+surface cellmembrane_7
+surface cellmembrane_8
+surface cellmembrane_9
+surface cellmembrane_10
+surface cellmembrane_11
+surface cellmembrane_12
+surface filament 
+point 50 0 0
+end_compartment
+
+start_compartment vegetative
+surface cellmembrane_1
+surface cellmembrane_3
+surface cellmembrane_4
+surface cellmembrane_5
+surface cellmembrane_6
+surface cellmembrane_7
+surface cellmembrane_8
+surface cellmembrane_9
+surface cellmembrane_11
+surface cellmembrane_12
+point 50 0 0 
+end_compartment
+
+start_compartment heterocyst 
+surface cellmembrane_2
+surface cellmembrane_10
+point 365 0 0 
+end_compartment
+
+compartment_mol 1000 Ngas boundary
+compartment_mol 20 Cgas boundary
+compartment_mol 200 Ogas boundary
+compartment_mol 50 Nfix filament
+compartment_mol 50 Cfix filament
+
+
+difc Nfix 5
+difc Cfix 5
+difc Ogas 50
+difc Ngas 50
+difc Cgas 50
+difc ATP 10
+
+reaction_cmpt vegetative photosynthesis		Cgas -> Cfix + Ogas		2e-1
+reaction_cmpt intracellular respiration		Ogas + Cfix -> Cgas + ATP	2e-1
+reaction_cmpt heterocyst 			Nfixation Ngas -> Nfix		2e-1	
+reaction_cmpt intracellular protein_turnover 	Nfix + ATP -> Ngas		2e-4
+
+
+output_files cyano_out6_vegetative.txt
+cmd N 5000 molcountincmpt cytoplasm_6 cyano_out6_vegetative.txt
+end_file
+/*
+
+cmd i 0 199999 
+cmd i 200000 399999
+cmd i 400000 599999
+cmd i 600000 799999
+cmd i 800000 1000000
+*/
+/*
+output_files spatial_out_1.txt spatial_out_2.txt spatial_out_3.txt spatial_out_4.txt spatial_out_5.txt spatial_out_6.txt spatial_out_7.txt spatial_out_8.txt spatial_out_9.txt spatial_out_10.txt spatial_out_11.txt spatial_out_12.txt
+cmd @ 100000 molcountincmpt cytoplasm_1 spatial_out_1.txt
+cmd @ 100000 molcountincmpt cytoplasm_2 spatial_out_2.txt
+cmd @ 100000 molcountincmpt cytoplasm_3 spatial_out_3.txt
+cmd @ 100000 molcountincmpt cytoplasm_4 spatial_out_4.txt
+cmd @ 100000 molcountincmpt cytoplasm_5 spatial_out_5.txt
+cmd @ 100000 molcountincmpt cytoplasm_6 spatial_out_6.txt
+cmd @ 100000 molcountincmpt cytoplasm_7 spatial_out_7.txt
+cmd @ 100000 molcountincmpt cytoplasm_8 spatial_out_8.txt
+cmd @ 100000 molcountincmpt cytoplasm_9 spatial_out_9.txt
+cmd @ 100000 molcountincmpt cytoplasm_10 spatial_out_10.txt
+cmd @ 100000 molcountincmpt cytoplasm_11 spatial_out_11.txt
+cmd @ 100000 molcountincmpt cytoplasm_12 spatial_out_12.txt
+*/
+end_file
