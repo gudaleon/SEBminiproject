@@ -12,17 +12,17 @@ return(result)
 
 matrixcreator <-function(){
   LikelihoodMap <- list()
-  LikelihoodMap[[1]] <- matrix(0.1, nrow = 10, ncol = 10)
+  LikelihoodMap[[1]] <- matrix(0.2, nrow = 10, ncol = 10)
   LikelihoodMap[[2]] <- matrix(0.1, nrow = 10, ncol = 10)
   LikelihoodMap[[3]] <- matrix(0.1, nrow = 10, ncol = 10)
-  LikelihoodMap[[4]] <- matrix(0.15, nrow = 10, ncol = 10)
-  LikelihoodMap[[5]] <- matrix(0.04, nrow = 10, ncol = 10)
+  LikelihoodMap[[4]] <- matrix(0.01, nrow = 10, ncol = 10)
+  LikelihoodMap[[5]] <- matrix(0.01, nrow = 10, ncol = 10)
   LikelihoodMap[[6]] <- matrix(0.01, nrow = 10, ncol = 10)
   
   StartingMatrix <- matrix(0, nrow = 10, ncol = 10)
   StartingMatrix[1,1] <- 1 
-  StartingMatrix[1,10] <- 2
-  StartingMatrix[10,1] <- 3
+  StartingMatrix[1,2] <- 2
+  StartingMatrix[1,3] <- 3
 }
 
 
@@ -34,7 +34,7 @@ modelsimulator <- function(StartingMatrix, LikelihoodMap, NumberofTrials){
   #initialising current matrix 
   CurrentMatrix = StartingMatrix
   dimensions <- dim(StartingMatrix)
-  
+  Ones <- matrix(1, dimensions[1], dimensions[2])
     for(i in c(1:NumberofTrials)){
 
       FreeSpots <- (CurrentMatrix==0)
@@ -48,8 +48,8 @@ modelsimulator <- function(StartingMatrix, LikelihoodMap, NumberofTrials){
       LikelihoodofPopC <- matrixsummation(PopulationC*LikelihoodMap[[3]])*FreeSpots
       
       
-      Normaliser <- LikelihoodofPopA + LikelihoodofPopB + LikelihoodofPopC
-      Normaliser <- Normaliser + (Normaliser==0)
+      Normaliser <- matrixsummation(Ones)
+      
       LikelihoodofPopA <- LikelihoodofPopA/Normaliser
       LikelihoodofPopB <- LikelihoodofPopB/Normaliser
       LikelihoodofPopC <- LikelihoodofPopC/Normaliser
