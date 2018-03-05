@@ -26,6 +26,7 @@ kIG = 1;
 pv = 0.85;
 ph = 1-pv;
 
+
 % Time parameters
 beta = 70;
 phi = 12;
@@ -49,11 +50,9 @@ Jrise = Jtransit - w/360;
 Jrise = Jrise - floor(Jrise);
 Sunrise = Jrise*24;
 
-theta  = (acosd(cosd(latitude)*cosd(delta)*cosd(w) + sind(latitude)*sind(delta)));
+A = Gsc*(sind(latitude)*sind(delta) + cosd(latitude)*cosd(delta));
 
-Gon = Gsc*(1 + 0.033*cos((360*n)/365));
 
-A = Gon*cos(theta);
 
 gamma = cos((timeofday - 12)*pi/12);
 rho = cos((Sunrise - 12)*pi/12);
@@ -63,10 +62,10 @@ circadian = (exp(beta*(gamma - alpha)))/(1+exp(beta*(gamma - alpha)));
 
 
 Z = r0*y(1)*y(3)/(k0 + 1/(kC*y(3)) + 1/(kN*y(1)) + 1/(kNC*y(1)*y(3)));
-ZL = r0/(k0 + 1/kI*I + 1/(kV*y(2)) + 1/(kI*kV*I*y(2)));
+ZL = r0/(k0 + 1/(kI*I) + 1/(kV*y(2)) + 1/(kI*kV*I*y(2)));
 
 Z2 = r0*y(4)*y(7)/(k0 + 1/(kC*y(7)) + 1/(kN*y(4)) + 1/(kNC*y(4)*y(7)));
-ZL2 = r0/(k0 + 1/kI*I + 1/(kV*y(5)) + 1/(kI*kV*I*y(5)));
+ZL2 = r0/(k0 + 1/(kI*I) + 1/(kV*y(5)) + 1/(kI*kV*I*y(5)));
 
 % Species 1:
 dydt(1) = 2*a*(y(3)/(y(3) + k)*y(2)) - r*y(2)*Z;

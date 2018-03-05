@@ -49,9 +49,9 @@ Jrise = Jtransit - w/360;
 Jrise = Jrise - floor(Jrise);
 Sunrise = Jrise*24;
 
-theta  = abs(acosd(cosd(latitude)*cosd(delta)*cosd(w) + sind(latitude)*sind(delta)));
+theta = (acosd(cosd(latitude)*cosd(delta)*cosd(w) + sind(latitude)*sind(delta)));
 
-Gon = Gsc*(1 + 0.033*cos((360*n)/
+Gon = Gsc*(1 + 0.033*cos((360*n)/365));
 
 A = Gon*cos(theta);
 
