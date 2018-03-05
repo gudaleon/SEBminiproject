@@ -1,0 +1,6 @@
+function [value, isterminal, direction] = eventfunction(t, y);
+no.variable.properties = 2;
+value = max(y(1:length(y/no.variable.properties))*no.variable.properties)-5;
+isterminal = 1;
+direction = 1;
+end
