@@ -6,26 +6,27 @@ function [dydt] = temporalpopnorig(t, y, latitude)
 dydt = zeros(10,1);
 
 % Parameters
-rN = 10e-2;     % Rate of nitrogen consumption
+rN = 3e-2;     % Rate of nitrogen consumption
 rC = 30e-2;     % Rate of carbon consumption
-rP = 10e-2;     % Rate of phosphate consumption
+rP1 = 10e-2;     % Rate of phosphate consumption
+rP2 = 10e-2;
 a = 0.1;
-b = 0.1;        % Maximal external P uptake rate
+b = 10e-3;        % Maximal external P uptake rate
 p3 = 1e-5;
 Gsc = 1000;     % Mean incident sunlight intensity on earth
-k = 100;
+k = 1000;
 ka = 10;
 kb = 1;
 kN = 100;
 kC = 4;
-kP = 10;
+kP = 4;
 kI = 0.1;
 kV = 0.1;
-rp = 0.06;
+rp = 16;
 rd = 0.03;
 pv = 0.85;
 ph = 1-pv;
-kPext = 10;     % Amount of phosphate for half maximal uptake rate
+kPext = 20;     % Amount of phosphate for half maximal uptake rate
 
 
 % Time parameters
@@ -63,7 +64,8 @@ V2 = y(6);
 H2 = y(7);
 C2 = y(8);
 P2 = y(9);
-Pext = y(10);
+Pext1 = y(10);
+Pext2 = y(11);
 
 % Producing the light rhythm and the circadian rhythm
 
@@ -75,8 +77,8 @@ circadian = (exp(beta*(gamma - alpha)))/(1+exp(beta*(gamma - alpha)));
 
 % Growth parameters as functions of resource levels
 
-Z = ka*(N1/(N1 + kN))*(C1/(C1+kC)); %*(P1/(P1+kP));
-Z2 = ka*(N2/(N2 + kN))*(C2/(C2+kC)); %*(P2/(P2 + kP));
+Z = ka*(N1/(N1 + kN))*(C1/(C1+kC))*(P1/(P1+kP));
+Z2 = ka*(N2/(N2 + kN))*(C2/(C2+kC))*(P2/(P2 + kP));
 
 % Conversion of light into carbon (depends on population size) 
 
@@ -84,18 +86,19 @@ ZL = kb*(I/(I + kI))*(V1/(V1 + kV));
 ZL2 = kb*(I/(I + kI))*(V2/(V2 + kV));
 
 % Species 1:
-dydt(1) = 2*a*(C1/(C1 + k)*V1) - rN*V1*Z;                                % N1
-dydt(2) = 0; %V1*(rd*Z -p3*V1);                                              % V1
-dydt(3) = circadian*ZL - rC*V1*Z - a*V1*(1-circadian)*((C1/(C1+k))); % C1
-dydt(4) = 0; %2*b*(Pext/(Pext + kPext))*V1 - rP*V1*Z;
+dydt(1) = 1*a*(C1/(C1 + k)) - rN*V1*Z;                                  % N1
+dydt(2) = V1*(rd*Z -p3*V1);                                             % V1
+dydt(3) = rp*circadian*ZL - rC*V1*Z - a*V1*(1-circadian)*((C1/(C1+k))); % C1
+dydt(4) = b*(Pext1/(Pext1 + kPext))*V1 - rP1*V1*Z;
 
 % Species 2:
-dydt(5) = 2*a*(C2/(C2 + k))*H2 - rN*V2*Z2;                               % N2
-dydt(6) = 0; %V2*(rd*pv*Z2 -p3*(V2+H2));                                     % V2
-dydt(7) = 0; %-p3*(H2 + V2)*H2 + rd*ph*V2*Z2;                                % H2
-dydt(8) = ZL2 - rC*V2*Z2 - a*H2*C2/(C2 + k);                       % C2
-dydt(9) = 0; %2*b*(Pext/(Pext + kPext))*V2 - rP*V2*Z;
-dydt(10) = 0; %2 - 2*b*(Pext/(Pext + kPext))*V2 - 2*b*(Pext/(Pext + kPext))*V1;
+dydt(5) = a*(C2/(C2 + k))*H2 - rN*V2*Z2 - 0.1*V2;                               % N2
+dydt(6) = V2*(rd*pv*Z2 -p3*(V2+H2));                                     % V2
+dydt(7) = -p3*(H2 + V2)*H2 + rd*ph*V2*Z2;                                % H2
+dydt(8) = ZL2*rp - rC*V2*Z2 - a*H2*C2/(C2 + k);                          % C2
+dydt(9) = b*(Pext2/(Pext2 + kPext))*V2 - rP2*V2*Z2;
+dydt(10) = 2 -b*(y(10)/(y(10) + kPext))*V1;
+dydt(11) = 2 -b*(y(11)/(y(11) + kPext))*V2;
 
 % At the moment, this gives faster growth at higher latitudes, because the
 % intensity of sunlight has not been adjusted for.
