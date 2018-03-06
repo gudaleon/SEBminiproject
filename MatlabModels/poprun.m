@@ -4,6 +4,6 @@ function [t,y] = poprun(tmax, y0, latitude)
 %amount of nitrogen, the starting popn size, and the starting amount of
 %carbon.
 t = 1:1:tmax;
-[t,y] = ode45(@(t,y) temporalpopn(t,y, latitude), t, y0);
+[t,y] = ode45(@(t,y) temporalpopn_v4(t,y, latitude), t, y0);
 end
 

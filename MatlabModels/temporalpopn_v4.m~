@@ -9,7 +9,7 @@ dydt = zeros(10,1);
 rN = 10e-2;     % Rate of nitrogen consumption
 rC = 30e-2;     % Rate of carbon consumption
 rP = 10e-2;     % Rate of phosphate consumption
-a = 0.1;
+a = 0.01;
 b = 0.1;        % Maximal external P uptake rate
 p3 = 1e-5;
 Gsc = 1000;     % Mean incident sunlight intensity on earth
@@ -86,13 +86,13 @@ ZL2 = kb*(I/(I + kI))*(V2/(V2 + kV));
 % Species 1:
 dydt(1) = 2*a*(C1/(C1 + k)*V1) - rN*V1*Z;                                % N1
 dydt(2) = V1*(rd*Z -p3*V1);                                              % V1
-dydt(3) = V1*rp*circadian*ZL - rC*V1*Z - a*V1*(1-circadian)*((C1/(C1+k))); % C1
+dydt(3) = V1*rp*circadian*ZL - rC*V1*Z - a*(1-circadian)*((C1/(C1+k))); % C1
 dydt(4) = 0; %2*b*(Pext/(Pext + kPext))*V1 - rP*V1*Z;
 
 % Species 2:
 dydt(5) = 2*a*(C2/(C2 + k))*H2 - rN*V2*Z2;                               % N2
-dydt(6) = V2*(rd*pv*Z2 -p3*(V2+H2));                                     % V2
-dydt(7) = -p3*(H2 + V2)*H2 + rd*ph*V2*Z2;                                % H2
+dydt(6) = V2*(rd*pv*Z2 -p3*(V2+H2));                                        % V2
+dydt(7) = -p3*(H2 + V2)*H2 + rd*ph*V2*Z2;                                          % H2
 dydt(8) = ZL2*rp*V2 - rC*V2*Z2 - a*H2*C2/(C2 + k);                       % C2
 dydt(9) = 0; %2*b*(Pext/(Pext + kPext))*V2 - rP*V2*Z;
 dydt(10) = 0; %2 - 2*b*(Pext/(Pext + kPext))*V2 - 2*b*(Pext/(Pext + kPext))*V1;
