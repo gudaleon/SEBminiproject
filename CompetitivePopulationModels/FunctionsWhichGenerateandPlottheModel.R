@@ -1,6 +1,9 @@
 library(reshape2)
 library(ggplot2)
 library(caTools) 
+library(pixelmap)
+library("colorspace") 
+library("dplyr")
 
 matrixsummation <- function(m){
   result <- array(sapply(seq_along(m), function(i) {
@@ -98,15 +101,23 @@ modelsimulator <- function(StartingMatrix, LikelihoodMap, NumberofTrials){
 }
 
 finalstepmodelplotter<- function(Model){
+  
   CurrentMatrix <- Model$finalmatrix
   melted_cormat <- melt(CurrentMatrix)
   colnames(melted_cormat) <- c(firstindex, secondindex, color)
   Stuff <- cbind(melted_cormat, melt(data.matrix(lakeS,  rownames.force = NA)))
-  #p <- ggplot(data =  melt(data.matrix(lakeS,  rownames.force = NA)),aes(x=Var1, y=Var2, fill=as.factor(value))) + geom_tile() + theme(legend.position="none")
-
-  ggplot(data = Stuff, aes(x=Var1, y=Var2, fill=color)) + geom_tile() 
-
+  pal1 <- choose_palette()
+  pal2 <- choose_palette()
+  pal3 <- choose_palette()
+  pal4 <- choose_palette()
+  Stuff$colorchoice <- "color"
+  Stuff[Stuff$color==0,c('colorchoice')] <- pal1(n=50)[ceiling(10*(Stuff[Stuff$color==0,c('value')]+2))]
+  Stuff[Stuff$color==1,c('colorchoice')] <- pal2(n=50)[ceiling(10*(Stuff[Stuff$color==1,c('value')]+2))]
+  Stuff[Stuff$color==2,c('colorchoice')] <- pal3(n=50)[ceiling(10*(Stuff[Stuff$color==2,c('value')]+2))]
+  Stuff[Stuff$color==3,c('colorchoice')] <- pal4(n=50)[ceiling(10*(Stuff[Stuff$color==3,c('value')]+2))]
   
-  #p + ggplot(data = melted_cormat, aes(x=Var1, y=Var2, fill=as.factor(value))) + geom_tile()  +
-    #scale_fill_manual(values=c(t_col("white", perc=100),t_col("#999999", perc=50), t_col("#E69F00", perc=50), t_col("#56B4E9", perc=50)))  + theme(legend.position="none")
+  x<-pixmapIndexed(data=c(1:144), nrow=12, ncol=12, col=Stuff$colorchoice)
+
+  x<- pixmapIndexed(data=c(1:144), nrow=12, ncol=12, col= pal1(n=50)[ceiling(10*(Stuff[,c('value')]+2))] )
+  
   }
