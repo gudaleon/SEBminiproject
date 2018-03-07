@@ -31,7 +31,7 @@ Birthrateheterotroph = zeros(100);
 
 for i = 1:100
     for j = 1:100
-        Birthratespatial(i,j) = 0.76*(P(i,j)/(2.5 + P(i,j)))*(N(i,j)/(N(i,j) + 4))*(L(i,j)/(L(i,j) + 4));
+        Birthratespatial(i,j) = 0.79*(P(i,j)/(2.5 + P(i,j)))*(N(i,j)/(N(i,j) + 4))*(L(i,j)/(L(i,j) + 4));
         Birthratetemporal(i,j) = 2*(P(i,j)/(11.5 + P(i,j)))*(N(i,j)/(N(i,j) + 10))*(L(i,j)/(L(i,j) + 3.98));
         Birthrateheterotroph(i,j) = 0.75*(P(i,j)/(8 + P(i,j)))*(N(i,j)/(N(i,j) + 0.5))*(L(i,j)/(L(i,j) + 4.03));
     end
