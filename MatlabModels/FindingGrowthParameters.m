@@ -1,7 +1,7 @@
 growthrate = zeros(100,1);
 
-for i = 1:1:100
-    y0 = [10 10 10 10 i/100 0];
-    [t,y] = poprun2(100, y0, 52, 1000);
-    growthrate(i) = max(y(:,2))/max(t);
+for i = 0:1:299
+    y0 = [i/100 1 100 100 100 0];
+    [t,y] = poprun(96, y0, 52, i);
+    growthrate(i+1) = max(y(:,2))/max(t);
 end
