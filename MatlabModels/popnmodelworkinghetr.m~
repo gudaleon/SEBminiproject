@@ -1,4 +1,4 @@
-function [dydt] = popnmodelworkinghetr(t, y, latitude, Gsc)
+function [dydt] = popnmodelworkinghetr(t, y, latitude)
 %This models the population level growth of Anabaena, as a function of
 %nitrogen, phosphate and light levels.
 
@@ -11,7 +11,8 @@ rC = 60e-3;     % Rate of carbon consumption
 rP = 0.4e-3;     % Rate of phosphate consumption
 a = 0.07;
 b = 0.001;        % Maximal external P uptake rate
-p3 = 1e-5;    % Mean incident sunlight intensity on earth
+p3 = 1e-5;
+Gsc = 1000;     % Mean incident sunlight intensity on earth
 k = 10;
 ka = 100;
 kb = 1;

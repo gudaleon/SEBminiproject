@@ -1,4 +1,4 @@
-function [dydt] = popnmodelworking2(t, y, latitude)
+function [dydt] = popnmodelworking2(t, y, latitude, Gsc)
 %This models the population level growth of Anabaena, as a function of
 %nitrogen, phosphate and light levels.
 
@@ -9,10 +9,9 @@ dydt = zeros(5,1);
 rN = 5e-3;     % Rate of nitrogen consumption
 rC = 60e-3;     % Rate of carbon consumption
 rP = 0.4e-3;     % Rate of phosphate consumption
-a = 0.004;
+a = 0.007;
 b = 0.001;        % Maximal external P uptake rate
-p3 = 1e-5;
-Gsc = 1000;     % Mean incident sunlight intensity on earth
+p3 = 1e-5;    % Mean incident sunlight intensity on earth
 k = 10;
 ka = 100;
 kb = 1;
@@ -21,7 +20,7 @@ kC = 15;
 kP = 0.3;
 kI = 0.1;
 kV = 0.1;
-rp = 2.4;
+rp = 2.0;
 rd = 0.03;
 pv = 0.85;
 ph = 1-pv;

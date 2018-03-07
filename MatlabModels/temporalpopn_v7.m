@@ -92,7 +92,7 @@ kPP = 10;
 
 % Species 1:
 dydt(1) = 2*a*(C1/(C1 + k))*V1 - rN*V1*Z - rNN*V1*(N1/(kNN + N1));                                  % N1
-dydt(2) = V1*(rd*Z -p3*V1);                                              % V1
+dydt(2) = V1*(rd*Z -p3*V1);                         % V1
 dydt(3) = rp*circadian*ZL - rC*V1*Z - a*V1*(1-circadian)*((C1/(C1+k))) - rCC*V1*(C1/(kCC + C1));  % C1
 dydt(4) = 2*b*(Pext/(Pext + kPext))*V1 - rP*V1*Z - rPP*V1*(P1/(kPP + P1));
 
