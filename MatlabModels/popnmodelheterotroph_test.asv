@@ -7,21 +7,20 @@ dydt = zeros(6,1);
 
 % Parameters
 rN = 5e-3;     % Rate of nitrogen consumption
-rC = 30e-3;     % Rate of carbon consumption
-rP = 0.5e-3;     % Rate of phosphate consumption
+rC = 60e-3;     % Rate of carbon consumption
+rP = 0.4e-3;     % Rate of phosphate consumption
 p = 0.003;        % Maximal external P uptake rate
 nu = 0.3;
 p3 = 1e-5;     % Mean incident sunlight intensity on earth
-ka = 200;
+ka = 100;
 kb = 1;
-kN = 2.4;
+kN = 1.8;
 kC = 15;
 kP = 0.3;
 kI = 0.1;
 kV = 0.1;
 rp = 6;
 rd = 0.03;
-pv = 0.85;
 kPext = 0.5;     % Amount of phosphate for half maximal uptake rate
 kNext = 0.5;
 
@@ -88,9 +87,9 @@ Z3 = ka*(N3/(N3 + kN))*(C3/(C3+kC))*(P3/(P3 + kP));
 %ZL2 = kb*(I/(I + kI))*(V2/(V2 + kV));dydt(5) = 0.008 - 2*b*(Pext/(Pext + kPext))*V3;
 ZL3 = kb*(I/(I + kI))*(V3/(V3 + kV));
 
-rNN = 5e-3;
-kNN = 0.4;
-rCC = 60e-3;
+rNN = 1.9e-3;
+kNN = 0.6;
+rCC = 0.5e-3;
 kCC = 15;
 rPP = 0.5e-3;
 kPP = 0.3;

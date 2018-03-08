@@ -4,6 +4,6 @@ function [t,y] = poprun2(tmax, y0, latitude, Gsc)
 %amount of nitrogen, the starting popn size, and the starting amount of
 %carbon.
 t = 1:tmax;
-[t,y] = ode45(@(t,y) popnmodelheterotroph(t,y, latitude, Gsc), t, y0);
+[t,y] = ode45(@(t,y) popnmodelheterotroph_test(t,y, latitude, Gsc), t, y0);
 end
 

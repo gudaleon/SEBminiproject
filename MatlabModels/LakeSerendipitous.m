@@ -15,21 +15,26 @@ P = q.ZData;
 %% lIGHT LEVELS
 
 syms f(x,y)
-f(x,y) = 3+ 0.005*x*real(atan(x+1*y))*sin(x+1)+1;
+f(x,y) = (3+ 0.005*x*real(atan(x+1*y))*sin(x+1)+1)^6;
 p = ezsurf(f,100);
-L = p.Zdata;
+L = p.ZData;
 
 %% Getting a birth probability
 
 Birthrate = zeros(100);
 
 % Spatial Cells
+Birthratespatial = zeros(100);
+Birthratetemporal = zeros(100);
+Birthrateheterotroph = zeros(100);
 
 for i = 1:100
     for j = 1:100
-        Birthratespatial(i,j) = 0.7*(P(i,j)/(7 + P(i,J))*(N(i,J)/(N(i,j) + 4)*(L(i,j)/(L(i,j) + 4));
-        Birthratetemporal(i,j) = 0.75*(P(i,j)/(9 + P(i,J))*(N(i,J)/(N(i,j) + 7)*(L(i,j)/(L(i,j) + 3.98));
-        Birthrateheterotroph(i,j) = 0.75*(P(i,j)/(9 + P(i,J))*(N(i,J)/(N(i,j) + 7)*(L(i,j)/(L(i,j) + 3.98));
+        Birthratespatial(i,j) = 0.76*(P(i,j)/(2.5 + P(i,j)))*(N(i,j)/(N(i,j) + 4))*(L(i,j)/(L(i,j) + 4));
+        Birthratetemporal(i,j) = 2*(P(i,j)/(11.5 + P(i,j)))*(N(i,j)/(N(i,j) + 10))*(L(i,j)/(L(i,j) + 3.98));
+        Birthrateheterotroph(i,j) = 0.7*(P(i,j)/(8 + P(i,j)))*(N(i,j)/(N(i,j) + 0.5))*(L(i,j)/(L(i,j) + 4.03));
+    end
+end
 
         
 
