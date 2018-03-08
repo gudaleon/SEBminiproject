@@ -284,9 +284,9 @@ GR = ([A.GrowthPara].*(R*cfC./(kfC + cfC)).*(R*cfN./(kfN + cfN)).*(R*cP./(kP + c
    
 % Key cellular processes
 photosynth = y(iLux)^2.*rP/(kP + y(iLux)^2);
-respir = (cfC.*rR/(kRC + cfC))*(cOx.*rR/(kROx + cOx));
+respir = (cfC*rR./(kRC + cfC)).*(cOx.*rR./(kROx + cOx));
 %N_fix = (fCfN)/(kfCfN + (10.*y(iOx))^6);
-N_fix = (fCfN)/(kfCfN + (10.*y(indexofvariable(mod(Vector,10)==6))).^6); 
+N_fix = (fCfN)./(kfCfN + (10.*y(indexofvariable(mod(Vector,10)==6)))'.^6); 
 
     %dydt(indexofvariable(mod(Vector,10)==1)) = fNsN;
     %dydt(indexofvariable(mod(Vector,10)==2)) = fCsC;
@@ -305,10 +305,10 @@ N_fix = (fCfN)/(kfCfN + (10.*y(indexofvariable(mod(Vector,10)==6))).^6);
     dydt(indexofvariable(mod(Vector,10)==3)) = Veg.*dhR - HetR_out;
     dydt(indexofvariable(mod(Vector,10)==4)) = PatS_in + PatS_out + (y(indexofvariable(mod(Vector,10)==3))'.*PatSProd);
     dydt(indexofvariable(mod(Vector,10)==5)) = 30.*(HetN_in + HetN_out) + (1-Veg).*(HetNProd).*y(indexofvariable(mod(Vector,10)==3))'./(0.1 + y(indexofvariable(mod(Vector,10)==5))'); % The 5 represents how much faster hetN diffuses compared to patS. 
-    dydt(indexofvariable(mod(Vector,10)==6)) = Veg.*(Ox_in + Ox_out + OxPH.*photosynth - OxRE.*respir) + (1-Veg).*(HetOxDiff.*(Ox_in + Ox_out) - OxRE.*respir);
+    dydt(indexofvariable(mod(Vector,10)==6)) = Veg.*(Ox_in + Ox_out + OxPH*photosynth - OxRE*respir) + (1-Veg).*(HetOxDiff*(Ox_in + Ox_out) - OxRE*respir);
     dydt(indexofvariable(mod(Vector,10)==7)) = fN_in + fN_out - n.*GR - fNsN + (1-Veg).*N_fix ;      
     dydt(indexofvariable(mod(Vector,10)==8)) = P_in + P_out - p.*GR;
-    dydt(indexofvariable(mod(Vector,10)==9)) = fC_in + fC_out - c.*GR + Veg*(CaPH.*photosynth - CaRE.*respir) + (1-Veg).*(-CaRE.*respir) - fCsC;
+    dydt(indexofvariable(mod(Vector,10)==9)) = fC_in + fC_out - c.*GR + Veg.*(CaPH.*photosynth - CaRE.*respir) + (1-Veg).*(-CaRE.*respir) - fCsC;
     dydt(indexofvariable(mod(Vector,10)==0)) = GR;                                                          
     dydt(iLux) = LI*sin(t/3);
 end
