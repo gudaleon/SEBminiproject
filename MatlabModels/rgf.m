@@ -14,6 +14,7 @@ lngtt(1) = length(A);
 spltc = zeros(1, generations+1);
 rec = [];
 for p = 1:generations
+    p
     %defining the initial conditions i.e. mapping from cells to growth vector,
     %for growth
     clear y0 dividers dims yend subset cell n i y TE
