@@ -1,4 +1,4 @@
-function [dydt] = popnmodelworking2(t, y, latitude, Gsc)
+function [dydt] = popnmodelworking2(t, y, latitude, Gsc, P_influx)
 %This models the population level growth of Anabaena, as a function of
 %nitrogen, phosphate and light levels.
 
@@ -101,7 +101,7 @@ dydt(4) = 2*b*(Pext/(Pext + kPext))*V1 - rP*V1*Z - rPP*V1*(P1/(kPP + P1));
 %dydt(7) = -p3*(H2 + V2)*H2 + rd*ph*V2*Z2;                                % H2
 %dydt(8) = ZL2*rp - rC*V2*Z2 - a*H2*C2/(C2 + k);                          % C2
 %dydt(9) = 2*b*(Pext/(Pext + kPext))*V2 - rP*V2*Z2;
-dydt(5) = 0.008 - 2*b*(Pext/(Pext + kPext))*V1; %-2*b*(Pext/(Pext + kPext))*V2;
+dydt(5) = P_influx - 2*b*(Pext/(Pext + kPext))*V1; %-2*b*(Pext/(Pext + kPext))*V2;
 
 
 end

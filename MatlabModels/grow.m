@@ -1,3 +1,4 @@
+
 function [dydt] = grow(t,y,A)
 %This simulates the growth of a group of cells from one cell division or differentiation until
 %the next.
@@ -25,7 +26,7 @@ function [dydt] = grow(t,y,A)
         CaRE = 5;
         
 % Kinetic parameters
-   kfC = 1;                                            % Conc. of fixed carbon for half maximal growth
+   kfC = 1;                                             % Conc. of fixed carbon for half maximal growth
    kfN = 0.3;                                           % Conc. of fixed nitrogen for half maximal growth                                                
     kP = 0.1;                                           % Conc. of phosphate for half maximal growth
     rR = 5.3;
@@ -95,7 +96,7 @@ for i = 1:length(A)
     iRL = i*nvp + 10;                        % Length of cell 'i+1'
     
 % Concentrations
-cfC = y(ifC)/y(iL);                        % The 3 represents a 'fudge factor'
+cfC = y(ifC)/y(iL);                        
 csC = y(isC)/y(iL); 
 cfN = y(ifN)/y(iL);
 csN = y(isN)/y(iL);

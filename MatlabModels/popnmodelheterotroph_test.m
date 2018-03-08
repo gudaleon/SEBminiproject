@@ -1,4 +1,4 @@
-function [dydt] = popnmodelheterotroph_test(t, y, latitude, Gsc)
+function [dydt] = popnmodelheterotroph_test(t, y, latitude, Gsc, N_influx, P_influx)
 %This models the population level growth of Anabaena, as a function of
 %nitrogen, phosphate and light levels.
 
@@ -113,8 +113,8 @@ dydt(1) = nu*(Next/(Next + kNext))*V3 - rN*V3*Z3 - rNN*(V3)*(N3/(kNN + N3));    
 dydt(2) = V3*(rd*Z3 -p3*(V3));                                                                         % V2                                               
 dydt(3) = ZL3*rp - rC*V3*Z3 - rCC*(V3)*(C3/(kCC + C3));                                                % C3
 dydt(4) = 2*p*(Pext/(Pext + kPext))*V3 - rP*V3*Z3 - rPP*(V3)*(P3/(kPP + P3));
-dydt(5) = 0.008 - 2*p*(Pext/(Pext + kPext))*V3;
-dydt(6) = 0.40 - nu*(Next/(Next + kNext))*V3;
+dydt(5) = P_influx - 2*p*(Pext/(Pext + kPext))*V3;
+dydt(6) = N_influx - nu*(Next/(Next + kNext))*V3;
 
 end
 
