@@ -2,22 +2,22 @@
 
 syms f(x,y)
 f(x,y) = 4 + real(atan(x+1*y)) * sin(x)+1 + sin(1*x) + 2*sin(0.5*y) + 0.25*sin(4*y+3);
-z = ezsurf(f,100);
-N = z.ZData;
+z = ezsurf(f,1000);
+csvwrite('LakeSNitrogen.csv',z.ZData)
 
 %% Phosphate levels
 
 syms f(x,y)
 f(x,y) = abs(real(atan(x+1*y)) * sin(x)+1 + sin(1*x) + 2*sin(0.5*y) + 0.25*sin(4*y+3) + 0.3*sin(y)*y*x + 9);
-q = ezsurf(f,100);
-P = q.ZData;
+q = ezsurf(f,1000);
+csvwrite('LakeSPhosphate.csv',q.ZData)
 
 %% lIGHT LEVELS
 
 syms f(x,y)
 f(x,y) = 3+ 0.005*x*real(atan(x+1*y))*sin(x+1)+1;
-p = ezsurf(f,100);
-L = p.ZData;
+p = ezsurf(f,1000);
+csvwrite('LakeSLight.csv',p.ZData)
 
 %% Getting a birth probability
 
@@ -29,13 +29,13 @@ Birthrateheterotroph = zeros(100);
 
 % Spatial Cells
 
-for i = 1:100
-    for j = 1:100
-        Birthratespatial(i,j) = 0.79*(P(i,j)/(2.5 + P(i,j)))*(N(i,j)/(N(i,j) + 4))*(L(i,j)/(L(i,j) + 4));
-        Birthratetemporal(i,j) = 2*(P(i,j)/(11.5 + P(i,j)))*(N(i,j)/(N(i,j) + 10))*(L(i,j)/(L(i,j) + 3.98));
-        Birthrateheterotroph(i,j) = 0.75*(P(i,j)/(8 + P(i,j)))*(N(i,j)/(N(i,j) + 0.5))*(L(i,j)/(L(i,j) + 4.03));
-    end
-end
+%for i = 1:100
+  %  for j = 1:100
+   %     Birthratespatial(i,j) = 0.79*(P(i,j)/(2.5 + P(i,j)))*(N(i,j)/(N(i,j) + 4))*(L(i,j)/(L(i,j) + 4));
+    %    Birthratetemporal(i,j) = 2*(P(i,j)/(11.5 + P(i,j)))*(N(i,j)/(N(i,j) + 10))*(L(i,j)/(L(i,j) + 3.98));
+    %    Birthrateheterotroph(i,j) = 0.75*(P(i,j)/(8 + P(i,j)))*(N(i,j)/(N(i,j) + 0.5))*(L(i,j)/(L(i,j) + 4.03));
+    %end
+%end
 
         
 
