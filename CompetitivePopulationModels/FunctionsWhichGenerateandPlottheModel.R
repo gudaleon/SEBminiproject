@@ -1,8 +1,8 @@
 library(reshape2)
 library(ggplot2)
 library(caTools) 
-#library(pixmap)
-#library(colorspace) 
+library(pixmap)
+library(colorspace) 
 library(dplyr)
 library(data.table)
 
@@ -113,22 +113,34 @@ modelsimulator <- function(StartingMatrix, LikelihoodMap, NumberofTrials){
 }
 
 finalstepmodelplotter<- function(Model){
-  CurrentMatrix <- Model$finalmatrix
-  melted_cormat <- melt(CurrentMatrix)
-  colnames(melted_cormat) <- c(firstindex, secondindex, color)
-  Stuff <- cbind(melted_cormat, melt(data.matrix(lakeS,  rownames.force = NA)))
-  pal2 <- choose_palette()
-  pal1 <- choose_palette()
-  pal3 <- choose_palette()
-  pal4 <- choose_palette()
-  Stuff$colorchoice <- "color"
-  Stuff[Stuff$color==0,c('colorchoice')] <- pal1(n=50)[ceiling(10*(Stuff[Stuff$color==0,c('value')]+2))]
-  Stuff[Stuff$color==1,c('colorchoice')] <- pal2(n=50)[ceiling(10*(Stuff[Stuff$color==1,c('value')]+2))]
-  Stuff[Stuff$color==2,c('colorchoice')] <- pal3(n=50)[ceiling(10*(Stuff[Stuff$color==2,c('value')]+2))]
-  Stuff[Stuff$color==3,c('colorchoice')] <- pal4(n=50)[ceiling(10*(Stuff[Stuff$color==3,c('value')]+2))]
   
-  x<-pixmapIndexed(data=c(1:144), nrow=12, ncol=12, col=Stuff$colorchoice)
+  colfunc <- colorRampPalette(c("#f1bb7b","#000000"))
+  pal1 <- colfunc(50)
+  colfunc <- colorRampPalette(c("#a2ddd5","#225d56"))
+  pal2 <- colfunc(50)
+  colfunc <- colorRampPalette(c("#eea091","#6e2012"))
+  pal3 <- colfunc(50)
+  colfunc <- colorRampPalette(c("#adaed2","#2d2f53"))
+  pal4 <- colfunc(50)
+  
+  for(i in c(1:100)){
+  CurrentMatrix <- Model$Updated[[i]]
+  melted_cormat <- melt(matrixsummation(Model$Updated[[i]]==1)+(Model$Updated[[i]]==1))
+  colnames(melted_cormat) <- c('firstindex', 'secondindex', 'color')
+  Stuff <- cbind(melted_cormat, melt(data.matrix(LakeSPhosphate[1:100,1:100],  rownames.force = NA)))
+  Stuff$colorchoice <- "color"
+  Stuff$colorchoice <- pal4[4*Stuff$color+1]
+  #Stuff[Stuff$color==0,c('colorchoice')] <- pal1[ceiling(4*(Stuff[Stuff$color==0,c('value')]-9))]
+  #Stuff[Stuff$color==1,c('colorchoice')] <- pal2[ceiling(4*(Stuff[Stuff$color==1,c('value')]-9))]
+  #Stuff[Stuff$color==2,c('colorchoice')] <- pal3[ceiling(4*(Stuff[Stuff$color==2,c('value')]-9))]
+  #Stuff[Stuff$color==3,c('colorchoice')] <- pal4[ceiling(4*(Stuff[Stuff$color==3,c('value')]-9))]
+  
+  x[[i]]<-pixmapIndexed(data=c(1:(100*100)), nrow=100, ncol=100, col=Stuff$colorchoice,cellres=1)
+  
+  png(paste0('plot',format(i/100, nsmall=3),'.png'))
+  plot(x[[i]])
+  dev.off()}
 
-  x<- pixmapIndexed(data=c(1:144), nrow=12, ncol=12, col= pal1(n=50)[ceiling(10*(Stuff[,c('value')]+2))] )
+
   
   }
