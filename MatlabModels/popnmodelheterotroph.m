@@ -7,27 +7,23 @@ dydt = zeros(6,1);
 
 % Parameters
 rN = 5e-3;     % Rate of nitrogen consumption
-rC = 60e-3;     % Rate of carbon consumption
-rP = 0.4e-3;     % Rate of phosphate consumption
-a = 0.4;
-p = 0.001;        % Maximal external P uptake rate
+rC = 30e-3;     % Rate of carbon consumption
+rP = 0.5e-3;     % Rate of phosphate consumption
+p = 0.003;        % Maximal external P uptake rate
+nu = 0.3;
 p3 = 1e-5;     % Mean incident sunlight intensity on earth
-k = 5;
 ka = 200;
 kb = 1;
-kN = 1.8;
+kN = 2.4;
 kC = 15;
 kP = 0.3;
 kI = 0.1;
 kV = 0.1;
-rp = 1.4;
+rp = 6;
 rd = 0.03;
 pv = 0.85;
-ph = 1-pv;
 kPext = 0.5;     % Amount of phosphate for half maximal uptake rate
-n = 0.005;
-kNext = 0.7;
-
+kNext = 0.5;
 
 % Time parameters
 beta = 70;
@@ -73,13 +69,12 @@ P3 = y(4);
 Pext = y(5);
 Next = y(6);
 
-
 % Producing the light rhythm and the circadian rhythm
 
     gamma = cos((timeofday - 12)*pi/12);
       rho = cos((Sunrise - 12)*pi/12);
-    alpha = -((-beta*rho + log(-xs/(-1 + xs)))/beta);Gsc = 1000; 
-        I = A*(exp(beta*(gamma - alpha)))/(1+exp(beta*(gamma - alpha)));
+    alpha = -((-beta*rho + log(-xs/(-1 + xs)))/beta);
+    I = A*(exp(beta*(gamma - alpha)))/(1+exp(beta*(gamma - alpha)));
 %circadian = (exp(beta*(gamma - alpha)))/(1+exp(beta*(gamma - alpha)));
 
 % Growth parameters as functions of resource levels
@@ -93,11 +88,11 @@ Z3 = ka*(N3/(N3 + kN))*(C3/(C3+kC))*(P3/(P3 + kP));
 %ZL2 = kb*(I/(I + kI))*(V2/(V2 + kV));dydt(5) = 0.008 - 2*b*(Pext/(Pext + kPext))*V3;
 ZL3 = kb*(I/(I + kI))*(V3/(V3 + kV));
 
-rNN = 5e-2;
-kNN = 0.6;
-rCC = 3e-2;
+rNN = 5e-3;
+kNN = 0.4;
+rCC = 60e-3;
 kCC = 15;
-rPP = 1e-2;
+rPP = 0.5e-3;
 kPP = 0.3;
 
 % Species 1:
@@ -115,12 +110,12 @@ kPP = 0.3;
 %dydt(6) = 0.008 - 2*b*(Pext/(Pext + kPext))*V2; %-2*b*(Pext/(Pext + kPext))*V2;
 
 % Species 3:
-dydt(1) = n*(Next/(Next + kNext))*V3 - rN*V3 - rNN*(V3)*(N3/(kNN + N3));                                  % N2
+dydt(1) = nu*(Next/(Next + kNext))*V3 - rN*V3*Z3 - rNN*(V3)*(N3/(kNN + N3));                                  % N2
 dydt(2) = V3*(rd*pv*Z3 -p3*(V3));                                                                 % V2                                                % H2
 dydt(3) = ZL3*rp - rC*V3*Z3 - rCC*(V3)*(C3/(kCC + C3));                                           % C3
 dydt(4) = 2*p*(Pext/(Pext + kPext))*V3 - rP*V3*Z3 - rPP*(V3)*(P3/(kPP + P3));
-dydt(5) = 0.16 - 2*p*(Pext/(Pext + kPext))*V3;
-dydt(6) = 2.0 - n*(Next/(Next + kNext))*V3;
+dydt(5) = 0.008 - 2*p*(Pext/(Pext + kPext))*V3;
+dydt(6) = 0.4 - nu*(Next/(Next + kNext))*V3;
 
 end
 
