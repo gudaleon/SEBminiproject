@@ -1,0 +1,123 @@
+# Temporal model
+
+graphics opengl_better
+
+light room ambient 0 0 0
+light 0 position 0 0 0
+light 0 diffuse 1 0.5 0.5
+light 0 ambient 0 0 0
+light 0 specular 1 1 1
+
+dim 3
+species Ci Ngas Ogas Cfix Nfix ATP 	
+
+time_start 0
+time_stop 5000
+time_step 0.5
+	   
+color Cfix green
+color Ngas pink	
+color Ci blue
+color Nfix red
+color Ogas cyan
+color ATP yellow
+
+
+display_size ATP 3
+display_size Nfix 4
+display_size Cfix 4
+display_size Ci 2
+display_size Ngas 2
+display_size Ogas 2
+
+boundaries x -900 1100 r  
+boundaries y -500 500 r
+boundaries z -500 500 r
+frame_thickness 0
+
+start_surface boundary
+action all both reflect
+color both darkgrey 1
+polygon both edge
+panel rect +0 -150 -150 150 300 -300
+panel rect -0 150 -150 150 300 -300
+panel rect +1 -150 -150 150 300 -300
+panel rect -1 -150 150 150 300 -300
+panel rect +2 -150 -150 150 300 300
+panel rect -2 -150 -150 -150 300 300
+end_surface 
+
+start_surface cellmembrane
+action all both transmit
+rate Nfix bsoln fsoln 0.5
+rate Cfix bsoln fsoln 0.5
+rate ATP bsoln fsoln 0.1
+rate Ci bsoln fsoln 0.8
+color both purple 1
+polygon both edge
+panel sph 0 0 0 100 20 20
+end_surface
+
+start_surface CCM
+action all both transmit
+rate Ci bsoln fsoln 0.1
+color both green 1
+polygon both edge
+panel sphere 20 -15 25 15 20 20 
+panel sphere -30 -25 0 15 20 20
+panel sphere 10 30 -25 15 20 20
+end_surface
+
+start_compartment CCM
+surface CCM
+point 0 0 0
+end_compartment 
+
+start_compartment cytoplasm
+surface cellmembrane
+point 0 0 0
+end_compartment
+
+start_compartment boundary 
+surface boundary
+point 0 0 0 
+end_compartment
+
+start_compartment extracellular
+surface cellmembrane
+surface boundary
+point -120 0 0
+point 120 0 0
+end_compartment
+
+cmd i 0 4000 100 fixmolcountincmpt Ogas 200 extracellular
+
+difc Nfix 0.4
+difc Cfix 0.1
+difc Ogas 0.4
+difc Ngas 0.4
+difc Ci 0.2
+difc ATP 0.1
+
+reaction_cmpt cytoplasm photosynthesis		Ci -> Cfix + Ogas
+reaction_cmpt cytoplasm respiration		Cfix + Ogas -> Ci + ATP	+ ATP + ATP 
+reaction_cmpt cytoplasm Nfixation 		Ngas + ATP -> Nfix 			
+reaction_cmpt cytoplasm protein_turnover 	Nfix -> Ngas
+product_placement photosynthesis irrev	
+product_placement respiration irrev
+product_placement Nfixation irrev
+product_placement protein_turnover irrev
+
+reaction_rate photosynthesis 0
+reaction_rate respiration 0
+reaction_rate Nfixation 0
+reaction_rate protein_turnover 0
+
+
+
+
+end_file
+
+
+
+

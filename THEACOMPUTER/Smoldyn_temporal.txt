@@ -1,0 +1,205 @@
+# Temporal model
+
+graphics opengl_better
+
+light room ambient 0.8 0.8 0.8
+light 0 position 500 0 500
+light 0 diffuse 1 0.5 0.5
+light 0 ambient 0 0 0
+light 0 specular 0.5 0.5 0.5
+background_colour grey
+
+dim 3
+species Ci Ngas Ogas Cfix Nfix ATP 	
+
+time_start 0
+time_stop 17280
+time_step 1
+/*
+tiff_name giftemp2/temporal_
+tiff_iter 60
+tiff_min 0
+tiff_max 300
+*/	   
+color Cfix green
+color Ngas pink	
+color Ci blue
+color Nfix red
+color Ogas cyan
+color ATP yellow
+
+display_size ATP 3
+display_size Nfix 4
+display_size Cfix 4
+display_size Ci 2
+display_size Ngas 2
+display_size Ogas 2
+
+boundaries x -150 150 r  
+boundaries y -150 150 r
+boundaries z -150 150 r
+frame_thickness 0
+
+start_surface boundary
+action all both reflect
+#rate Nfix bsoln fsoln 0
+#rate Cfix bsoln fsoln 0
+#rate ATP bsoln fsoln 0
+#rate Ci bsoln fsoln 0
+#rate Ngas bsoln fsoln 0.00005
+#rate Ogas bsoln fsoln 0.00005
+color both darkgrey 1
+polygon both edge
+panel rect +0 -150 -150 150 300 -300
+panel rect -0 150 -150 150 300 -300
+panel rect +1 -150 -150 150 300 -300
+panel rect -1 -150 150 150 300 -300
+panel rect +2 -150 -150 150 300 300
+panel rect -2 -150 -150 -150 300 300
+end_surface 
+
+start_surface cellmembrane
+action all both transmit
+rate Nfix bsoln fsoln 0.9
+rate Cfix bsoln fsoln 0.8
+rate ATP bsoln fsoln 0.4
+rate Ci bsoln fsoln 0.4
+rate Ngas bsoln fsoln 0.9
+rate Ogas bsoln fsoln 0.9
+rate Nfix fsoln bsoln 0.9
+rate Cfix fsoln bsoln 0.4
+rate ATP fsoln bsoln 0.4
+rate Ci fsoln bsoln 1
+rate Ngas fsoln bsoln 1
+rate Ogas fsoln bsoln 1
+color both purple 1
+polygon both edge
+panel sph 0 0 0 100 20 20
+end_surface
+
+start_surface CCM1
+action all both transmit
+rate Ci bsoln fsoln 0.2
+color both green 1
+polygon both face
+panel sphere 20 -15 25 20 10 10 
+end_surface
+
+start_surface CCM2
+action all both transmit
+rate Ci bsoln fsoln 0.2
+color both green 1
+polygon both face
+panel sphere -30 -25 0 20 10 10
+end_surface
+
+start_surface CCM3
+action all both transmit
+rate Ci bsoln fsoln 0.2
+color both green 1
+polygon both face
+panel sphere 10 30 -25 20 10 10
+end_surface
+
+start_compartment CCM
+surface CCM1
+surface CCM2
+surface CCM3
+point 20 -15 25
+point 10 30 -25
+point -30 -25 0
+end_compartment 
+
+start_compartment cytoplasm
+surface cellmembrane
+point 0 0 0
+point 40 10 0
+point -40 -10 0
+end_compartment
+
+start_compartment boundary 
+surface boundary
+point 0 0 0 
+point 80 0 0  
+point 290 -290 -290 
+point 290 290 290 
+point -290 -290 -290 
+point -290 290 290
+end_compartment
+
+start_compartment extracellular
+compartment equal boundary
+compartment andnot cytoplasm
+end_compartment
+
+cmd i 0 17280 20 fixmolcountincmpt Ngas 200 extracellular
+cmd i 0 17280 20 fixmolcountincmpt Ci 20 extracellular
+cmd i 0 17280 20 fixmolcounticmpt Ogas 100 extracellular
+cmd N 10 ifincmpt Ci < 5 CCM set compartment_mol 2 Ci CCM
+
+difc Nfix 70
+difc Cfix 12
+difc Ogas 50
+difc Ngas 50
+difc Ci 50
+difc ATP 5
+
+reaction compartment=cytoplasm photosynthesis		Ci -> Cfix + Ogas
+reaction compartment=cytoplasm respiration		Cfix + Ogas -> Ci + ATP	+ ATP + ATP
+reaction compartment=cytoplasm Nfixation1 		Ngas -> Nfix  
+reaction compartment=cytoplasm Nfixation2		ATP -> Nfix  		
+reaction compartment=cytoplasm protein_turnover 	Nfix + ATP -> Ngas
+reaction compartment=cytoplasm energy_use		ATP -> 0
+product_placement photosynthesis irrev	
+product_placement respiration irrev
+product_placement energy_use irrev
+product_placement Nfixation1 irrev
+product_placement Nfixation2 irrev
+product_placement protein_turnover irrev
+
+reaction_rate photosynthesis 0.015
+reaction_rate Nfixation1 0
+reaction_rate Nfixation2 0
+binding_radius respiration 9
+
+binding_radius protein_turnover 13
+reaction_probability energy_use 0.03
+
+cmd b pause
+
+cmd @ 4680 set reaction_rate photosynthesis 0
+cmd @ 4680 set binding_radius respiration 8
+cmd @ 4680 set reaction_rate Nfixation1 0.001
+cmd @ 4680 set reaction_rate Nfixation2 0.002
+cmd @ 8640 set reaction_rate photosynthesis 0.015
+cmd @ 8640 set binding_radius respiration 9
+cmd @ 8640 set reaction_rate Nfixation1 0
+cmd @ 8640 set reaction_rate Nfixation2 0
+cmd @ 13320 set reaction_rate photosynthesis 0
+cmd @ 13320 set binding_radius respiration 8
+cmd @ 13320 set reaction_rate Nfixation1 0.001
+cmd @ 13320 set reaction_rate Nfixation2 0.002
+
+cmd @ 1 set background_color white 
+cmd @ 4680 set background_color 0.8 0.8 0.8
+cmd @ 8640 set graphics opengl_better
+cmd @ 8638 set background_color white 
+cmd @ 8638 set light 0 ambient 0.2 0.2 0.2
+cmd @ 13320 set background_color 0.8 0.8 0.8
+cmd @ 13320 set light 0 ambient 0 0 0 
+
+cmd N 10 killmoloutsidesystem Nfix 
+cmd N 10 killmoloutsidesystem Cfix 
+cmd N 10 killmoloutsidesystem Ngas 
+cmd N 10 killmoloutsidesystem Ci
+cmd N 10 killmoloutsidesystem Ogas
+
+output_files temporalday5.txt
+cmd N 10 molcountincmpt cytoplasm temporalday5.txt
+end_file
+
+end_file
+
+
+
+

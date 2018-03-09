@@ -1,0 +1,7 @@
+
+csvwrite('spatial_Ci.csv',spatial_Ci)
+csvwrite('spatial_Ogas.csv',spatial_Ogas)
+csvwrite('spatial_Cfix.csv',spatial_Cfix)
+csvwrite('spatial_Nfix.csv',spatial_Nfix)
+csvwrite('spatial_ATP.csv',spatial_ATP)
+csvwrite('spatial_Ngas.csv',spatial_Ngas)

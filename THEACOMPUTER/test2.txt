@@ -1,0 +1,91 @@
+# Heterocystic model
+
+graphics opengl_better
+
+light room ambient 0 0 0
+light 0 position 10 4000 2000
+light 0 diffuse 1 0.5 0.5
+light 0 ambient 0.1 0.1 0.1
+light 0 specular 1 1 1
+
+dim 3
+species Ci Ngas Ogas Cfix Nfix ATP			
+
+time_start 0
+time_stop 17280
+time_step 1
+
+color Cfix green
+color Ngas pink	
+color Ci blue
+color Nfix red
+color Ogas cyan
+color ATP yellow
+
+display_size ATP 2
+display_size Nfix 3
+display_size Cfix 3
+display_size Ci 1
+display_size Ngas 1
+display_size Ogas 1
+
+boundaries x -800 800 r  
+boundaries y -150 150  r
+boundaries z -150 150 r
+frame_thickness 0
+
+start_surface boundary
+action all both reflect
+color both darkgrey 1
+polygon both edge
+panel rect +0 -800 -150 150 300 -300
+panel rect -0 800 -150 150 300 -300
+panel rect +1 -800 -150 150 1600 -300
+panel rect -1 -800 150 150 1600 -300
+panel rect +2 -800 -150 150 1600 300
+panel rect -2 -800 -150 -150 1600 300
+end_surface 
+
+start_surface filament
+action all both transmit
+rate Nfix bsoln fsoln 0.2
+rate Cfix bsoln fsoln 0.2
+rate ATP bsoln fsoln 0.1
+rate Ci bsoln fsoln 0.8
+rate Ngas bsoln fsoln 0.8
+rate Ogas bsoln fsoln 0.8
+color both darkgrey 
+shininess both 20
+polygon both edge
+panel hemi -580 0 0 70 1 0 0 10 4	
+panel cyl -580 0 0 595 0 0 70 10 20
+panel hemi 595 0 0 70 -1 0 0 10 4
+end_surface
+
+start_compartment boundary 
+surface boundary
+point 100 100 100
+end_compartment
+
+start_compartment filament 
+surface filament
+point 10 0 0 
+end_compartment
+
+start_compartment extracellular
+compartment equal boundary  
+compartment andnot filament
+point 0 65 0
+end_compartment
+
+compartment_mol 80 Nfix boundary
+
+difc Nfix 0
+difc Cfix 0
+difc Ogas 0
+difc Ngas 0
+difc Ci 0
+difc ATP 0
+
+
+end_file

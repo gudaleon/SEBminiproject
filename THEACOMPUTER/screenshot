@@ -1,0 +1,709 @@
+# Heterocystic model
+
+graphics opengl_better
+
+light room ambient 0 0 0
+light 0 position 0 400 200
+light 0 diffuse 1 0.5 0.5
+light 0 ambient 0.1 0.1 0.1
+light 0 specular 1 1 1
+
+dim 3
+species Ci Ngas Ogas Cfix Nfix ATP			
+
+time_start 0
+time_stop 17280
+time_step 1
+/*
+tiff_name spatial_movie
+tiff_iter 180
+tiff_min 0
+tiff_max 96 
+*/
+color Cfix green
+color Ngas pink	
+color Ci blue
+color Nfix red
+color Ogas cyan
+color ATP yellow
+
+display_size ATP 2
+display_size Nfix 3
+display_size Cfix 3
+display_size Ci 1
+display_size Ngas 1
+display_size Ogas 1
+
+boundaries x -800 800 r  
+boundaries y -150 150 r
+boundaries z -150 150 r
+frame_thickness 0
+
+start_surface boundary
+action Ci both reflect
+action Ogas both reflect
+action Ngas both reflect
+action Nfix both transmit
+action Cfix both transmit
+action ATP both transmit
+color both darkgrey 1
+polygon both edge
+panel rect +0 -800 -150 150 300 -300
+panel rect -0 800 -150 150 300 -300
+panel rect +1 -800 -150 150 1600 -300
+panel rect -1 -800 150 150 1600 -300
+panel rect +2 -800 -150 150 1600 300
+panel rect -2 -800 -150 -150 1600 300
+end_surface 
+
+start_surface filament_cyl
+action all both transmit
+rate Nfix bsoln fsoln 0.2
+rate Cfix bsoln fsoln 0.3
+rate ATP bsoln fsoln 0.05
+rate Ci bsoln fsoln 0.8
+rate Ngas bsoln fsoln 0.8
+rate Ogas bsoln fsoln 0.8
+rate Nfix fsoln bsoln 0.6
+rate Cfix fsoln bsoln 0.4
+rate ATP fsoln bsoln 0.1
+rate Ci fsoln bsoln 0.8
+rate Ngas fsoln bsoln 0.8
+rate Ogas fsoln bsoln 0.8
+color both darkgrey 
+polygon both edge	
+panel cyl -580 0 0 595 0 0 70 10 20
+end_surface
+
+start_surface filament_ends
+action all both transmit
+rate Nfix bsoln fsoln 0.9
+rate Cfix bsoln fsoln 0.9
+rate ATP bsoln fsoln 0.9
+rate Ci bsoln fsoln 0.9
+rate Ngas bsoln fsoln 0.9
+rate Ogas bsoln fsoln 0.9
+rate Nfix fsoln bsoln 0.9
+rate Cfix fsoln bsoln 0.9
+rate ATP fsoln bsoln 0.9
+rate Ci fsoln bsoln 0.9
+rate Ngas fsoln bsoln 0.9
+rate Ogas fsoln bsoln 0.9
+color both darkgrey 
+polygon both edge
+panel hemi -580 0 0 70 1 0 0 10 4	
+panel hemi 595 0 0 70 -1 0 0 10 4
+end_surface
+
+start_surface cellmembrane_1
+action all both transmit
+rate Nfix bsoln fsoln 0.9
+rate Cfix bsoln fsoln 0.8
+rate ATP bsoln fsoln 0.4
+rate Ci bsoln fsoln 0.4
+rate Ngas bsoln fsoln 0.9
+rate Ogas bsoln fsoln 0.9
+rate Nfix fsoln bsoln 0.9
+rate Cfix fsoln bsoln 0.4
+rate ATP fsoln bsoln 0.4
+rate Ci fsoln bsoln 1
+rate Ngas fsoln bsoln 1
+rate Ogas fsoln bsoln 1
+color both green 1
+polygon both face
+panel sph -580 0 0 50 20 20
+end_surface
+
+start_surface CCM_1
+action all both transmit
+rate Ci bsoln fsoln 0.2
+color both purple 1
+polygon both edge
+panel sphere -595 10 -20 10 10 10
+panel sphere -580 -15 -5 10 10 10
+panel sphere -570 20 10 10 10 10
+end_surface
+
+start_surface cellmembrane_2
+action all both transmit
+rate Nfix bsoln fsoln 0.8
+rate Cfix bsoln fsoln 1
+rate ATP bsoln fsoln 0.1
+rate Ci bsoln fsoln 0.6
+rate Ngas bsoln fsoln 0.3
+rate Ogas bsoln fsoln 0.8
+rate Nfix fsoln bsoln 0.8
+rate Cfix fsoln bsoln 0.8
+rate ATP fsoln bsoln 0.8
+rate Ci fsoln bsoln 0.6
+rate Ngas fsoln bsoln 1
+rate Ogas fsoln bsoln 0.8
+color both darkorange 1
+polygon both face
+panel sph -475 0 0 50 20 20
+panel cyl -525 0 0 -530 0 0 2 10 3
+panel cyl -420 0 0 -425 0 0 2 10 3
+end_surface
+
+start_surface jumpsurface_123
+action both all jump
+color both blue
+polygon both edge
+panel disk -535 0 0 15 1 0 0 10 c1b
+panel disk -520 0 0 15 1 0 0 10 c2a
+panel disk -430 0 0 15 1 0 0 10 c2b
+panel disk -415 0 0 15 1 0 0 10 c3a
+jump c1b back <-> c2a front
+jump c2b back <-> c3a front
+end_surface
+
+start_surface cellmembrane_3
+action all both transmit
+rate Nfix bsoln fsoln 0.9
+rate Cfix bsoln fsoln 0.8
+rate ATP bsoln fsoln 0.4
+rate Ci bsoln fsoln 0.4
+rate Ngas bsoln fsoln 0.9
+rate Ogas bsoln fsoln 0.9
+rate Nfix fsoln bsoln 0.9
+rate Cfix fsoln bsoln 0.4
+rate ATP fsoln bsoln 0.4
+rate Ci fsoln bsoln 1
+rate Ngas fsoln bsoln 1
+rate Ogas fsoln bsoln 1
+color both green 1
+polygon both face
+panel sph -370 0 0 50 20 20
+end_surface
+
+start_surface CCM_3
+action all both transmit
+rate Ci bsoln fsoln 0.2
+color both purple 1
+polygon both edge
+panel sphere -385 10 -20 10 10 10
+panel sphere -370 -15 -5 10 10 10
+panel sphere -360 20 10 10 10 10
+end_surface
+
+start_surface cellmembrane_4
+action all both transmit
+rate Nfix bsoln fsoln 0.9
+rate Cfix bsoln fsoln 0.8
+rate ATP bsoln fsoln 0.4
+rate Ci bsoln fsoln 0.4
+rate Ngas bsoln fsoln 0.9
+rate Ogas bsoln fsoln 0.9
+rate Nfix fsoln bsoln 0.9
+rate Cfix fsoln bsoln 0.4
+rate ATP fsoln bsoln 0.4
+rate Ci fsoln bsoln 1
+rate Ngas fsoln bsoln 1
+rate Ogas fsoln bsoln 1
+color both green 1
+polygon both face
+panel sph -265 0 0 50 20 20
+end_surface
+
+start_surface CCM_4
+action all both transmit
+rate Ci bsoln fsoln 0.2
+color both purple 1
+polygon both edge
+panel sphere -265 10 -20 10 10 10
+panel sphere -280 -15 -5 10 10 10
+panel sphere -255 20 10 10 10 10
+end_surface
+
+start_surface cellmembrane_5
+action all both transmit 
+rate Nfix bsoln fsoln 0.9
+rate Cfix bsoln fsoln 0.8
+rate ATP bsoln fsoln 0.4
+rate Ci bsoln fsoln 0.4
+rate Ngas bsoln fsoln 0.9
+rate Ogas bsoln fsoln 0.9
+rate Nfix fsoln bsoln 0.9
+rate Cfix fsoln bsoln 0.4
+rate ATP fsoln bsoln 0.4
+rate Ci fsoln bsoln 1
+rate Ngas fsoln bsoln 1
+rate Ogas fsoln bsoln 1
+color both green 1
+polygon both face
+panel sph -160 0 0 50 20 20
+end_surface
+
+start_surface CCM_5
+action all both transmit
+rate Ci bsoln fsoln 0.2
+color both purple 1
+polygon both edge
+panel sphere -160 10 -20 10 10 10
+panel sphere -175 -15 -5 10 10 10
+panel sphere -150 20 10 10 10 10
+end_surface
+
+start_surface cellmembrane_6
+action all both transmit
+rate Nfix bsoln fsoln 0.9
+rate Cfix bsoln fsoln 0.8
+rate ATP bsoln fsoln 0.4
+rate Ci bsoln fsoln 0.4
+rate Ngas bsoln fsoln 0.9
+rate Ogas bsoln fsoln 0.9
+rate Nfix fsoln bsoln 0.9
+rate Cfix fsoln bsoln 0.4
+rate ATP fsoln bsoln 0.4
+rate Ci fsoln bsoln 1
+rate Ngas fsoln bsoln 1
+rate Ogas fsoln bsoln 1
+colour both green 1
+polygon both face
+panel sph -55 0 0 50 20 20
+end_surface
+
+start_surface CCM_6
+action all both transmit
+rate Ci bsoln fsoln 0.2
+color both purple 1
+polygon both edge
+panel sphere -55 10 -20 10 10 10
+panel sphere -70 -15 -5 10 10 10
+panel sphere -45 20 10 10 10 10
+end_surface
+
+start_surface cellmembrane_7
+action all both transmit
+rate Nfix bsoln fsoln 0.9
+rate Cfix bsoln fsoln 0.8
+rate ATP bsoln fsoln 0.4
+rate Ci bsoln fsoln 0.4
+rate Ngas bsoln fsoln 0.9
+rate Ogas bsoln fsoln 0.9
+rate Nfix fsoln bsoln 0.9
+rate Cfix fsoln bsoln 0.4
+rate ATP fsoln bsoln 0.4
+rate Ci fsoln bsoln 1
+rate Ngas fsoln bsoln 1
+rate Ogas fsoln bsoln 1
+color both green 1
+polygon both face
+panel sph 50 0 0 50 20 20
+end_surface
+
+start_surface CCM_7
+action all both transmit
+rate Ci bsoln fsoln 0.2
+color both purple 1
+polygon both edge
+panel sphere 65 10 -20 10 10 10
+panel sphere 50 -15 -5 10 10 10
+panel sphere 40 20 10 10 10 10
+end_surface
+
+start_surface cellmembrane_8
+action all both transmit
+rate Nfix bsoln fsoln 0.9
+rate Cfix bsoln fsoln 0.8
+rate ATP bsoln fsoln 0.4
+rate Ci bsoln fsoln 0.4
+rate Ngas bsoln fsoln 0.9
+rate Ogas bsoln fsoln 0.9
+rate Nfix fsoln bsoln 0.9
+rate Cfix fsoln bsoln 0.4
+rate ATP fsoln bsoln 0.4
+rate Ci fsoln bsoln 1
+rate Ngas fsoln bsoln 1
+rate Ogas fsoln bsoln 1
+color both green 1
+polygon both face
+panel sph 155 0 0 50 20 20
+end_surface
+
+start_surface CCM_8
+action all both transmit
+rate Ci bsoln fsoln 0.2
+color both purple 1
+polygon both edge
+panel sphere 170 10 -20 10 10 10
+panel sphere 155 -15 -5 10 10 10
+panel sphere 145 20 10 10 10 10
+end_surface
+
+start_surface cellmembrane_9
+action all both transmit
+rate Nfix bsoln fsoln 0.9
+rate Cfix bsoln fsoln 0.8
+rate ATP bsoln fsoln 0.4
+rate Ci bsoln fsoln 0.4
+rate Ngas bsoln fsoln 0.9
+rate Ogas bsoln fsoln 0.9
+rate Nfix fsoln bsoln 0.9
+rate Cfix fsoln bsoln 0.4
+rate ATP fsoln bsoln 0.4
+rate Ci fsoln bsoln 1
+rate Ngas fsoln bsoln 1
+rate Ogas fsoln bsoln 1
+color both green 1
+polygon both face
+panel sph 260 0 0 50 20 20
+end_surface
+
+start_surface CCM_9
+action all both transmit
+rate Ci bsoln fsoln 0.2
+color both purple 1
+polygon both edge
+panel sphere 280 10 -20 10 10 10
+panel sphere 265 -15 -5 10 10 10
+panel sphere 255 20 10 10 10 10
+end_surface
+
+start_surface cellmembrane_10
+action all both transmit
+rate Nfix bsoln fsoln 0.8
+rate Cfix bsoln fsoln 1
+rate ATP bsoln fsoln 0.1
+rate Ci bsoln fsoln 0.6
+rate Ngas bsoln fsoln 0.3
+rate Ogas bsoln fsoln 0.8
+rate Nfix fsoln bsoln 0.8
+rate Cfix fsoln bsoln 0.8
+rate ATP fsoln bsoln 0.8
+rate Ci fsoln bsoln 0.6
+rate Ngas fsoln bsoln 0.9
+rate Ogas fsoln bsoln 0.8
+color both darkorange 1
+polygon both face
+panel sph 365 0 0 50 20 20
+panel cyl 415 0 0 420 0 0 2 10 3
+panel cyl 315 0 0 310 0 0 2 10 3
+end_surface
+
+start_surface jumpsurface_91011
+action both all jump
+color both blue
+polygon both edge
+panel disk +305 0 0 15 1 0 0 10 c9b
+panel disk +320 0 0 15 1 0 0 10 c10a
+panel disk +410 0 0 15 1 0 0 10 c10b
+panel disk +425 0 0 15 1 0 0 10 c11a
+jump c9b back <-> c10a front
+jump c10b back <-> c11a front
+end_surface
+
+start_surface cellmembrane_11
+action all both transmit
+rate Nfix bsoln fsoln 0.9
+rate Cfix bsoln fsoln 0.8
+rate ATP bsoln fsoln 0.4
+rate Ci bsoln fsoln 0.4
+rate Ngas bsoln fsoln 0.9
+rate Ogas bsoln fsoln 0.9
+rate Nfix fsoln bsoln 0.9
+rate Cfix fsoln bsoln 0.4
+rate ATP fsoln bsoln 0.4
+rate Ci fsoln bsoln 1
+rate Ngas fsoln bsoln 1
+rate Ogas fsoln bsoln 1
+color both green 1
+polygon both face
+panel sph 470 0 0 50 20 20
+end_surface
+
+start_surface CCM_11
+action all both transmit
+rate Ci bsoln fsoln 0.2
+color both purple 1
+polygon both edge
+panel sphere 485 10 -20 10 10 10
+panel sphere 470 -15 -5 10 10 10
+panel sphere 460 20 10 10 10 10
+end_surface
+
+start_surface cellmembrane_12
+action all both transmit
+rate Nfix bsoln fsoln 0.9
+rate Cfix bsoln fsoln 0.8
+rate ATP bsoln fsoln 0.4
+rate Ci bsoln fsoln 0.4
+rate Ngas bsoln fsoln 0.9
+rate Ogas bsoln fsoln 0.9
+rate Nfix fsoln bsoln 0.9
+rate Cfix fsoln bsoln 0.4
+rate ATP fsoln bsoln 0.4
+rate Ci fsoln bsoln 1
+rate Ngas fsoln bsoln 1
+rate Ogas fsoln bsoln 1
+color both green 1
+polygon both face
+panel sph 575 0 0 50 20 20
+end_surface
+
+start_surface CCM_12
+action all both transmit
+rate Ci bsoln fsoln 0.2
+color both purple 1
+polygon both edge
+panel sphere 590 10 -20 10 10 10
+panel sphere 575 -15 -5 10 10 10
+panel sphere 565 20 10 10 10 10
+end_surface
+
+start_compartment cytoplasm_1
+surface cellmembrane_1
+point -575 0 0
+end_compartment
+
+start_compartment cytoplasm_2
+surface cellmembrane_2
+point -470 0 0
+end_compartment
+
+start_compartment cytoplasm_3
+surface cellmembrane_3
+point -365 0 0
+end_compartment
+
+start_compartment cytoplasm_4
+surface cellmembrane_4
+point -260 0 0
+end_compartment
+
+start_compartment cytoplasm_5
+surface cellmembrane_5
+point -155 0 0
+end_compartment
+
+start_compartment cytoplasm_6
+surface cellmembrane_6
+point -50 0 0
+end_compartment
+
+start_compartment cytoplasm_7
+surface cellmembrane_7
+point 50 0 0
+end_compartment
+
+start_compartment cytoplasm_8
+surface cellmembrane_8
+point 155 0 0
+end_compartment
+
+start_compartment cytoplasm_9
+surface cellmembrane_9
+point 260 0 0
+end_compartment
+
+start_compartment cytoplasm_10
+surface cellmembrane_10
+point 365 0 0
+end_compartment
+
+start_compartment cytoplasm_11
+surface cellmembrane_11
+point 470 0 0
+end_compartment
+
+start_compartment cytoplasm_12
+surface cellmembrane_12
+point 575 0 0
+end_compartment
+
+start_compartment boundary 
+surface boundary
+point 798 148 148
+point 798 -148 148
+point 798 148 -148
+point 798 -148 -148
+point -798 148 148
+point -798 -148 148
+point -798 148 -148
+point -798 -148 -148
+end_compartment
+
+start_compartment outside 
+surface boundary
+point 805 153 153
+point 805 -153 153
+point 805 153 -153
+point 805 -153 -153
+point -805 153 153
+point -805 -153 153
+point -805 153 -153
+point -805 -153 -153
+end_compartment
+
+start_compartment outer 
+surface boundary
+surface filament_ends
+surface filament_cyl
+point 798 148 148
+point 798 -148 148
+point 798 148 -148
+point 798 -148 -148
+point -798 148 148
+point -798 -148 148
+point -798 148 -148
+point -798 -148 -148
+end_compartment
+
+start_compartment filament
+compartment equal boundary
+compartment andnot outer
+end_compartment
+
+start_compartment CCM1
+surface CCM_1
+point -595 10 -20 
+point -580 -15 -5
+point -570 20 10
+end_compartment
+
+start_compartment CCM3
+surface CCM_3
+point -385 10 -20 
+point -370 -15 -5
+point -360 20 10
+end_compartment
+
+start_compartment CCM4
+surface CCM_4
+point -265 10 -20 
+point -280 -15 -5 
+point -255 20 10
+end_compartment
+
+start_compartment CCM5
+surface CCM_5
+point -160 10 -20 
+point -175 -15 -5
+point -150 20 10
+end_compartment
+
+start_compartment CCM6
+surface CCM_6
+point -55 10 -20
+point -70 -15 -5 
+point -45 20 10 
+end_compartment
+
+start_compartment CCM7
+surface CCM_7
+point 65 10 -20
+point 50 -15 -5
+point 40 20 10 
+end_compartment
+
+start_compartment CCM8
+surface CCM_8
+point 170 10 -20
+point 155 -15 -5
+point 145 20 10
+end_compartment
+
+start_compartment CCM9
+surface CCM_9
+point 280 10 -20
+point 265 -15 -5 
+point 255 20 10
+end_compartment
+
+start_compartment CCM11
+surface CCM_11
+point 485 10 -20
+point 470 -15 -5 
+point 460 20 10
+end_compartment
+
+start_compartment CCM12
+surface CCM_12 
+point 590 10 -20
+point 575 -15 -5
+point 565 20 10  
+end_compartment
+
+start_compartment CCM
+compartment equal CCM1
+compartment xor CCM3
+compartment xor CCM4
+compartment xor CCM5
+compartment xor CCM6
+compartment xor CCM7
+compartment xor CCM8
+compartment xor CCM9
+compartment xor CCM11
+compartment xor CCM12
+end_compartment
+
+start_compartment extracellular
+compartment equal boundary  
+compartment andnot cytoplasm_1
+compartment andnot cytoplasm_2
+compartment andnot cytoplasm_3
+compartment andnot cytoplasm_4
+compartment andnot cytoplasm_5
+compartment andnot cytoplasm_6
+compartment andnot cytoplasm_7
+compartment andnot cytoplasm_8
+compartment andnot cytoplasm_9
+compartment andnot cytoplasm_10
+compartment andnot cytoplasm_11
+compartment andnot cytoplasm_12
+end_compartment
+
+start_compartment intracellular
+compartment equal cytoplasm_1
+compartment xor cytoplasm_2
+compartment xor cytoplasm_3
+compartment xor cytoplasm_4
+compartment xor cytoplasm_5
+compartment xor cytoplasm_6
+compartment xor cytoplasm_7
+compartment xor cytoplasm_8
+compartment xor cytoplasm_9
+compartment xor cytoplasm_10
+compartment xor cytoplasm_11
+compartment xor cytoplasm_12
+end_compartment
+
+start_compartment vegetative
+compartment equal cytoplasm_1
+compartment xor cytoplasm_3
+compartment xor cytoplasm_4
+compartment xor cytoplasm_5
+compartment xor cytoplasm_6
+compartment xor cytoplasm_7
+compartment xor cytoplasm_8
+compartment xor cytoplasm_9
+compartment xor cytoplasm_11
+compartment xor cytoplasm_12
+end_compartment
+
+start_compartment heterocyst 
+compartment equal cytoplasm_2
+compartment xor cytoplasm_10
+end_compartment
+
+
+compartment_mol 2000 Ngas extracellular
+compartment_mol 500 Ogas extracellular
+compartment_mol 100 Ci extracellular
+compartment_mol 100 Cfix extracellular
+compartment_mol 100 ATP extracellular
+compartment_mol 100 Nfix extracellular
+
+cmd @ 0 set background_color 1 1 1 
+cmd @ 4680 set background_color grey
+cmd @ 8640 set background_color 1 1 1 
+cmd @ 13320 set background_color grey
+
+cmd N 10 killmoloutsidesystem Nfix 
+cmd N 10 killmoloutsidesystem Cfix 
+cmd N 10 killmoloutsidesystem ATP 
+cmd N 10 killmoloutsidesystem Ngas 
+cmd N 10 killmoloutsidesystem Ci
+cmd N 10 killmoloutsidesystem Ogas 
+
+end_file

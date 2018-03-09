@@ -1,0 +1,65 @@
+# Heterocystic model
+
+graphics opengl_better
+
+light room ambient 0 0 0
+light 0 position 0 400 200
+light 0 diffuse 1 0.5 0.5
+light 0 ambient 0.1 0.1 0.1
+light 0 specular 1 1 1
+
+dim 3
+species Ci Ngas Ogas Cfix Nfix ATP			
+
+time_start 0
+time_stop 17280
+time_step 1
+
+color Cfix green
+color Ngas pink	
+color Ci blue
+color Nfix red
+color Ogas cyan
+color ATP yellow
+
+display_size ATP 2
+display_size Nfix 3
+display_size Cfix 3
+display_size Ci 1
+display_size Ngas 1
+display_size Ogas 1
+
+boundaries x -900 1100 r  
+boundaries y -500 500 r
+boundaries z -500 500 r
+frame_thickness 0
+
+start_surface cellmembrane_1
+action all both transmit
+rate Nfix bsoln fsoln 0.5
+rate Cfix bsoln fsoln 0.8
+rate ATP bsoln fsoln 0
+rate Ci bsoln fsoln 0.4
+rate Ngas bsoln fsoln 0.9
+rate Ogas bsoln fsoln 0.9
+rate Nfix fsoln bsoln 1
+rate Cfix fsoln bsoln 0.4
+rate ATP fsoln bsoln 0.1
+rate Ci fsoln bsoln 1
+rate Ngas fsoln bsoln 1
+rate Ogas fsoln bsoln 1
+color both green 1
+polygon both edge
+panel sph -580 0 0 50 20 20
+end_surface
+
+start_compartment A
+surface cellmembrane_1
+point -580 0 0 
+end_compartment
+
+difc ATP 20
+
+compartment_mol 150 ATP A
+
+end_file
