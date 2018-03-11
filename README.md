@@ -32,3 +32,11 @@
 * do a git merge 
 * then do a git pull
 * git push 
+
+
+GrandBudapest <- c( "#5B5EA6", "#DD4124","#009B77", "#EFC050", "#9B2335", "#DFCFBE","#D65076",  "#55B4B0", "#E15D44", "#7FCDCD", "#BC243C", "#C3447A" ) 
+
+library(colorspace) 
+
+colfunc <- colorRampPalette(c(< First color >,< Second color >))
+  pal1 <- colfunc(< no of colours >)
